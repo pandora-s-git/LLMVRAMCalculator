@@ -66,7 +66,7 @@ def _model_config(hf_model: str) -> dict:
     config["parameters"] = model_size
     return config
 
-def _input_buffer(context: int, model_config: dict, bsz: int):
+def _input_buffer(context: int, model_config: dict, bsz: int) -> float:
     """
     Calculates the input buffer size.
 
@@ -86,7 +86,7 @@ def _input_buffer(context: int, model_config: dict, bsz: int):
     inp_sum = bsz
     return inp_tokens + inp_embd + inp_pos + inp_KQ_mask + inp_K_shift + inp_sum
 
-def _compute_buffer(context: int, model_config: dict, bsz: int):
+def _compute_buffer(context: int, model_config: dict, bsz: int) -> float:
     """
     Calculates the compute buffer size.
 
@@ -102,7 +102,7 @@ def _compute_buffer(context: int, model_config: dict, bsz: int):
         print("batch size other than 512 is currently not supported for the compute buffer, using batchsize 512 for compute buffer calculation, end result result will be an overestimation")
     return (context / 1024 * 2 + 0.75) * model_config["num_attention_heads"] * 1024 * 1024
 
-def _kv_cache(context: int, model_config: dict, cache_bit: int):
+def _kv_cache(context: int, model_config: dict, cache_bit: int) -> float:
     """
     Calculates the key-value cache size.
 
@@ -120,7 +120,7 @@ def _kv_cache(context: int, model_config: dict, cache_bit: int):
     size = 2 * n_elements
     return size * (cache_bit / 8)
 
-def _context_size(context: int, model_config: dict, bsz: int, cache_bit: int):
+def _context_size(context: int, model_config: dict, bsz: int, cache_bit: int) -> float:
     """
     Calculates the total context size.
 
@@ -135,7 +135,7 @@ def _context_size(context: int, model_config: dict, bsz: int, cache_bit: int):
     """
     return round(_input_buffer(context, model_config, bsz) + _kv_cache(context, model_config, cache_bit) + _compute_buffer(context, model_config, bsz), 2)
 
-def _model_size(model_config, bpw: float):
+def _model_size(model_config, bpw: float) -> float:
     """
     Calculates the size of the model.
 
@@ -148,7 +148,7 @@ def _model_size(model_config, bpw: float):
     """
     return round(model_config["parameters"] * bpw / 8, 2)
 
-def compute_sizes_exl2(hf_model: str, context: int, cache_bit: int = 16, bpw: float = 4.5):
+def compute_sizes_exl2(hf_model: str, context: int, cache_bit: int = 16, bpw: float = 4.5) -> dict:
     """
     Computes the sizes (model size, context size, and total size) excluding L2 cache.
 
@@ -170,7 +170,7 @@ def compute_sizes_exl2(hf_model: str, context: int, cache_bit: int = 16, bpw: fl
     
     return {"model_size": model_sz, "context_size": context_sz, "total_size": total_sz}
 
-def compute_sizes_gguf(hf_model: str, context: int, quant_size: str = ""):
+def compute_sizes_gguf(hf_model: str, context: int, quant_size: str = "") -> dict:
     """
     Computes the sizes (model size, context size, and total size) using GGUF quantization.
 
