@@ -2,6 +2,9 @@
 
 The `LLMVRAMCalculator.py` provides a tool for estimating the VRAM requirements for running large language models (LLMs) on GPUs. It calculates the sizes of the model, context, and total VRAM required for EXL2 and GGUF quantization.
 
+## Kudos to NyxKrage
+This wouldnt be possible without the [LLM Model VRAM Calculator](https://huggingface.co/spaces/NyxKrage/LLM-Model-VRAM-Calculator) from NyxKrage, so thank you and all credits to him!
+
 ## Install
 Install using pip:
 ```bash
