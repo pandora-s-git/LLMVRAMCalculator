@@ -28,14 +28,25 @@ print(json.dumps(gguf, indent = 4))
 Output:
 ```shell
 {
+    "params": {
+        "hf_model": "Nexusflow/Starling-LM-7B-beta",
+        "context": 8192,
+        "cache_bit": 16,
+        "bpw": 4.5
+    },
     "model_size": 3.793727159500122,
     "context_size": 1.5293059349060059,
     "total_size": 5.323033094406128
 }
 ['Q2_K', 'Q3_K_S', 'Q3_K_M', 'Q3_K_L', 'Q4_0', 'Q4_K_S', 'Q4_K_M', 'Q5_0', 'Q5_K_S', 'Q5_K_M', 'Q6_K', 'Q8_0']
 {
-    "model_size": 3.8611711978912355,  
+    "params": {
+        "hf_model": "Nexusflow/Starling-LM-7B-beta",
+        "context": 8192,
+        "quant_size": "Q4_K_S"
+    },
+    "model_size": 3.8611711978912355,
     "context_size": 1.5293059349060059,
-    "total_size": 5.390477132797241    
+    "total_size": 5.390477132797241
 }
 ```

@@ -168,7 +168,7 @@ def compute_sizes_exl2(hf_model: str, context: int, cache_bit: int = 16, bpw: fl
     context_sz = _context_size(context, model_config_data, batch_size, cache_bit) / (2**30)
     total_sz = (model_sz + context_sz)
     
-    return {"model_size": model_sz, "context_size": context_sz, "total_size": total_sz}
+    return {"params": {"hf_model": hf_model, "context": context, "cache_bit": cache_bit, "bpw": bpw}, "model_size": model_sz, "context_size": context_sz, "total_size": total_sz}
 
 def compute_sizes_gguf(hf_model: str, context: int, quant_size: str = "") -> dict:
     """
@@ -190,4 +190,4 @@ def compute_sizes_gguf(hf_model: str, context: int, quant_size: str = "") -> dic
     context_sz = _context_size(context, model_config_data, batch_size, 16) / (2**30)
     total_sz = (model_sz + context_sz)
 
-    return {"model_size": model_sz, "context_size": context_sz, "total_size": total_sz}
+    return {"params": {"hf_model": hf_model, "context": context, "quant_size": quant_size}, "model_size": model_sz, "context_size": context_sz, "total_size": total_sz}
